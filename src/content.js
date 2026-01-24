@@ -29,33 +29,53 @@
 
     if (!target) return;
 
-    const btn = document.createElement('div');
-    btn.id = 'text-to-img-btn';
+    const container = document.createElement('div');
+    container.style.cssText = `
+      background-color: transparent;
+      padding-top: 2px;
+    `;
 
-    btn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>';
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = `
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 8px;
+    `;
+
+    const btn = document.createElement('button');
+    btn.id = 'text-to-img-btn';
+    btn.setAttribute('aria-label', 'テキストを画像に変換');
+    btn.setAttribute('role', 'button');
+    btn.type = 'button';
 
     btn.style.cssText = `
-      cursor: pointer; 
-      color: #1d9bf0; 
-      padding: 8px; 
-      border-radius: 50%;
-      margin-left: 8px; 
-      display: inline-flex; 
-      align-items: center; 
+      border: none;
+      background-color: transparent;
+      padding: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      transition: background 0.2s;
+      border-radius: 999px;
+      transition: background-color 0.2s ease;
     `;
+
+    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-lrvibr r-m6rgpd r-z80fyv r-19wmn03" style="color: rgb(29, 155, 240); width: 20px; height: 20px;"><g><path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086zM9.75 7C8.784 7 8 7.784 8 8.75s.784 1.75 1.75 1.75 1.75-.784 1.75-1.75S10.716 7 9.75 7z"></path></g></svg>';
 
     btn.onmouseover = () => btn.style.backgroundColor = 'rgba(29, 155, 240, 0.1)';
     btn.onmouseout = () => btn.style.backgroundColor = 'transparent';
 
-    btn.onclick = () => {
+    btn.onclick = (e) => {
+      e.preventDefault();
       const text = Utils.getEditorText();
       ui.setText(text);
       ui.mount();
     };
 
-    target.appendChild(btn);
+    wrapper.appendChild(btn);
+    container.appendChild(wrapper);
+    target.appendChild(container);
   };
 
   const observer = new MutationObserver(injectButton);
