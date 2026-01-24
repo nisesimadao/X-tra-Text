@@ -17,7 +17,13 @@ class ImageRenderer {
 
     const ctx = canvas.getContext('2d');
 
-    const text = config.text || "";
+    // プレースホルダー表示処理
+    let text = config.text || "";
+    const isPlaceholder = text.trim() === "";
+    if (isPlaceholder) {
+      text = config.placeholder || "ここにテキストを入力してください...";
+    }
+
     const scale = config.scaleFactor || 2.0;
     const baseWidth = config.baseWidth || 1200;
 
@@ -30,7 +36,9 @@ class ImageRenderer {
 
     const MAX_HEIGHT = 4096;
 
-    ctx.font = `800 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+    // fontFamilyをconfigから取得（デフォルト: Arial）
+    const fontFamily = config.fontFamily || "Arial";
+    ctx.font = `800 ${fontSize}px ${fontFamily}, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
 
     const words = text.split('');
     let line = '';
@@ -65,7 +73,11 @@ class ImageRenderer {
     if (config.bgImage) {
       return this._renderWithBgImage(ctx, width, height, config);
     } else if (config.useBg) {
-      ctx.fillStyle = config.bgColor;
+      // bgAlphaが設定されている場合はそれを使用、なければ1（完全不透明）
+      const bgAlpha = config.bgAlpha !== undefined ? config.bgAlpha : 1;
+      // HEX色をrgbaに変換
+      const rgb = this._hexToRgb(config.bgColor);
+      ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${bgAlpha})`;
       ctx.fillRect(0, 0, width, height);
     } else {
       ctx.clearRect(0, 0, width, height);
@@ -119,12 +131,17 @@ class ImageRenderer {
         const lineHeight = fontSize * 1.3;
 
         // 再計算が必要なので、lines配列を再構築
-        const text = config.text || "";
+        let text = config.text || "";
+        // プレースホルダー表示処理
+        if (text.trim() === "") {
+          text = config.placeholder || "ここにテキストを入力してください...";
+        }
         const baseWidth = config.baseWidth || 1200;
         const scale = config.scaleFactor || 2.0;
         const maxWidth = width - (padding * 2);
 
-        ctx.font = `800 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+        const fontFamily = config.fontFamily || "Arial";
+        ctx.font = `800 ${fontSize}px ${fontFamily}, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
 
         const words = text.split('');
         let line = '';
@@ -170,8 +187,9 @@ class ImageRenderer {
 
   _renderText(ctx, width, height, config, fontSize, strokeWidth, padding, lineHeight, lines) {
     const align = config.textAlign || "left";
+    const fontFamily = config.fontFamily || "Arial";
 
-    ctx.font = `800 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+    ctx.font = `800 ${fontSize}px ${fontFamily}, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
     ctx.textBaseline = 'top';
     ctx.lineJoin = 'round';
     ctx.miterLimit = 2;
@@ -218,5 +236,15 @@ class ImageRenderer {
         resolve(blob);
       }, 'image/png', 1.0);
     });
+  }
+
+  _hexToRgb(hex) {
+    // #RRGGBB形式をRGB値に変換
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : { r: 0, g: 0, b: 0 };
   }
 }
