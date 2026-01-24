@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "X-tra Text",
+  "version": "1.0",
+  "description": "X上にテキストを画像に変換するボタンを追加します",
+  "permissions": ["clipboardWrite"],
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*", "https://x.com/*"],
+      "js": [
+        "src/constants.js",
+        "src/utils.js",
+        "src/renderer.js",
+        "src/ui.js",
+        "src/content.js"
+      ]
+    }
+  ]
+}
