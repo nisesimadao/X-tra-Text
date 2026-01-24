@@ -2,6 +2,7 @@
   console.log("X Text-to-Image Loaded");
 
   const renderer = new ImageRenderer('editor-canvas');
+  const settingsUI = new SettingsUI();
 
   const handleInsert = async (blob) => {
     try {
@@ -78,9 +79,38 @@
     target.appendChild(container);
   };
 
-  const observer = new MutationObserver(injectButton);
+  const injectSettingsButton = () => {
+    if (document.getElementById('text-to-img-settings-btn')) return;
+
+    let target = document.querySelector('nav');
+    if (!target) return;
+
+    const link = document.createElement('a');
+    link.id = 'text-to-img-settings-btn';
+    link.href = 'javascript:void(0)';
+    link.setAttribute('aria-label', 'テキスト画像変換の設定');
+    link.setAttribute('role', 'link');
+    link.className = 'css-175oi2r r-6koalj r-eqz5dr r-16y2uox r-1habvwh r-cnw61z r-13qz1uu r-1ny4l3l r-1loqt21';
+
+    link.innerHTML = `
+      <div class="css-175oi2r r-sdzlij r-dnmrzs r-1awozwy r-18u37iz r-1777fci r-xyw6el r-o7ynqc r-6416eg"><div class="css-175oi2r"><svg viewBox="0 0 24 24" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-lrvibr r-m6rgpd r-1nao33i r-lwhw9o r-cnnz9e"><g><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></g></svg></div><div dir="ltr" class="css-146c3p1 r-dnmrzs r-1udh08x r-1udbk01 r-3s2u2q r-bcqeeo r-1ttztb7 r-qvutc0 r-1tl8opc r-adyw6z r-135wba7 r-16dba41 r-dlybji r-nazi8o" style="color: rgb(231, 233, 234);"><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-1tl8opc">テキスト画像設定</span><span class="css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-1tl8opc"> </span></div></div>
+    `;
+
+    link.onclick = (e) => {
+      e.preventDefault();
+      settingsUI.mount();
+    };
+
+    target.appendChild(link);
+  };
+
+  const observer = new MutationObserver(() => {
+    injectButton();
+    injectSettingsButton();
+  });
   observer.observe(document.body, { childList: true, subtree: true });
 
   injectButton();
+  injectSettingsButton();
 
 })();
