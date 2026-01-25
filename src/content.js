@@ -8,8 +8,7 @@
     try {
       Utils.clearEditorText();
       await new Promise(resolve => setTimeout(resolve, 100));
-      await Utils.copyToClipboard(blob);
-      await Utils.pasteToEditor();
+      await Utils.pasteToEditor(blob);
       ui.unmount();
     } catch (e) {
       console.error(e);

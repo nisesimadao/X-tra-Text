@@ -13,5 +13,6 @@ const CONFIG_DEFAULT = {
   scaleFactor: 2.0,
   textAlign: "left",
   bgImage: null,
-  bgOpacity: 0.5
+  bgOpacity: 0.5,
+  fontWeight: "800"
 };

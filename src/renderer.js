@@ -36,9 +36,9 @@ class ImageRenderer {
 
     const MAX_HEIGHT = 4096;
 
-    // fontFamilyをconfigから取得（デフォルト: Arial）
     const fontFamily = config.fontFamily || "Arial";
-    ctx.font = `800 ${fontSize}px ${fontFamily}, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+    const fontWeight = config.fontWeight || "800";
+    ctx.font = `${fontWeight} ${fontSize}px "${fontFamily}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
 
     const words = text.split('');
     let line = '';
@@ -141,7 +141,8 @@ class ImageRenderer {
         const maxWidth = width - (padding * 2);
 
         const fontFamily = config.fontFamily || "Arial";
-        ctx.font = `800 ${fontSize}px ${fontFamily}, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+        const fontWeight = config.fontWeight || "800";
+        ctx.font = `${fontWeight} ${fontSize}px "${fontFamily}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
 
         const words = text.split('');
         let line = '';
@@ -188,8 +189,8 @@ class ImageRenderer {
   _renderText(ctx, width, height, config, fontSize, strokeWidth, padding, lineHeight, lines) {
     const align = config.textAlign || "left";
     const fontFamily = config.fontFamily || "Arial";
-
-    ctx.font = `800 ${fontSize}px ${fontFamily}, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+    const fontWeight = config.fontWeight || "800";
+    ctx.font = `${fontWeight} ${fontSize}px "${fontFamily}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
     ctx.textBaseline = 'top';
     ctx.lineJoin = 'round';
     ctx.miterLimit = 2;
@@ -228,8 +229,22 @@ class ImageRenderer {
       return null;
     }
 
+    // Xの透過PNG安定化のため、長辺を900px以内にリサイズする
+    const MAX_X_DIM = 900;
+    let targetCanvas = canvas;
+
+    if (canvas.width > MAX_X_DIM || canvas.height > MAX_X_DIM) {
+      const offscreen = document.createElement('canvas');
+      const ratio = Math.min(MAX_X_DIM / canvas.width, MAX_X_DIM / canvas.height);
+      offscreen.width = canvas.width * ratio;
+      offscreen.height = canvas.height * ratio;
+      const oCtx = offscreen.getContext('2d');
+      oCtx.drawImage(canvas, 0, 0, offscreen.width, offscreen.height);
+      targetCanvas = offscreen;
+    }
+
     return new Promise(resolve => {
-      canvas.toBlob((blob) => {
+      targetCanvas.toBlob((blob) => {
         if (!blob) {
           console.error("toBlob失敗: Blob生成がnullを返しました");
         }

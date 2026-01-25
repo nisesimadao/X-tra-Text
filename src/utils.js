@@ -9,11 +9,28 @@ const Utils = {
     }
   },
 
-  async pasteToEditor() {
+  async pasteToEditor(blob) {
     const editor = document.querySelector('[data-testid="tweetTextarea_0"]');
     if (editor) {
       editor.focus();
-      document.execCommand('paste');
+
+      try {
+        const file = new File([blob], "image.png", { type: "image/png" });
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+
+        const pasteEvent = new ClipboardEvent('paste', {
+          clipboardData: dataTransfer,
+          bubbles: true,
+          cancelable: true
+        });
+
+        editor.dispatchEvent(pasteEvent);
+      } catch (err) {
+        console.error("貼り付けエラー:", err);
+        // フォールバックとして従来の形式も試みる
+        document.execCommand('paste');
+      }
     }
   },
 
@@ -50,6 +67,6 @@ const Utils = {
 
   getEditorText() {
     const editor = document.querySelector('[data-testid="tweetTextarea_0"]');
-    return editor ? editor.innerText : "";
+    return editor ? editor.innerText.trim() : "";
   }
 };
