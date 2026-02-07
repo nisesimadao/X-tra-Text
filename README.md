@@ -1,41 +1,43 @@
 # X-tra Text 
-X (Twitter) の140文字制限を、美しく、スマートに突破するためのChrome拡張機能です。
-長文を打ち込むと、画像へ一瞬で変換します。
+A Chrome extension designed to beautifully and smartly bypass X (Twitter)'s 140-character limit.
+Instantly convert long posts into images.
 
+[日本語版 README はこちら](README-ja.md)
 
-## 主な機能
-- **自動画像生成**: 140文字を超える長文も、ワンクリックで画像化してクリップボードにコピーします。
-- **スマート自動調整**: 文字数に応じて、最適なフォントサイズと配置（中央揃え/左揃え）を自動で提案します。
-- **背景カスタマイズ**: 単色背景だけでなく、お気に入りの画像をアップロードして背景に設定可能。
-- **ガラス効果 (Glassmorphism)**: 背景画像の上に半透明レイヤーを重ねることで、可読性を保ちつつエモい質感を演出します。
-- **リアルタイム編集**: スライダーを動かすだけで、文字サイズや縁取りを即座にプレビュー反映。
-- **設定機能**: いろいろな項目を設定することができます。
+## Key Features
+- **Automatic Image Generation**: Convert long text exceeding 140 characters into an image and copy it to your clipboard with a single click.
+- **Smart Auto-Adjustment**: Automatically suggests the optimal font size and alignment (center/left) based on character count.
+- **Background Customization**: Set solid colors or upload your favorite images as backgrounds.
+- **Glassmorphism Effect**: Overlay a semi-transparent layer on background images to maintain readability while creating a stylish aesthetic.
+- **Real-time Editing**: Instantly preview changes to font size and outlines using sliders.
+- **Settings**: Customize various options to suit your preferences.
 
-## 使い方 (開発者モードでのインストール)
-以下の手順で手動インストールしてください。
+## How to Use (Installation via Developer Mode)
+Please follow these steps for manual installation:
 
-1. このリポジトリをクローンまたは ZIP でダウンロードして解凍します。
-2. Google Chrome で `chrome://extensions/` を開きます。
-3. 右上の「デベロッパー モード」をオンにします。
-4. 「パッケージ化されていない拡張機能を読み込む」をクリックし、解凍したフォルダを選択します。
-5. X (x.com) を開き、投稿欄に新しく出現した「画像アイコン」をクリックして開始！
+1. Clone this repository or download and extract the ZIP file.
+2. Open `chrome://extensions/` in Google Chrome.
+3. Enable "Developer mode" in the top right corner.
+4. Click "Load unpacked" and select the extracted folder.
+5. Open X (x.com) and click the new "Image Icon" in the post composer to start!
 
-## 技術スタック
+## Tech Stack
 - **Language**: JavaScript (Vanilla JS)
 - **Engine**: Canvas API (High-DPI support with 2x scale)
 - **Architecture**:
-  - `renderer.js`: 高解像度レンダリングエンジン
-  - `ui.js`: ガラスモーフィズムを採用したエディタUI
-  - `utils.js`: クリップボード・エディタ操作ユーティリティ
-## 貢献・フィードバック (Contributing)
-バグ報告、機能要望、プルリクエストなど、あらゆる形での貢献を歓迎します！
+  - `renderer.js`: High-resolution rendering engine
+  - `ui.js`: Editor UI featuring Glassmorphism
+  - `utils.js`: Clipboard and editor operation utilities
 
-- 「こんなデザインの背景プリセットが欲しい」
-- 「絵文字をもっと綺麗に表示したい」
-- 「コードをもっと綺麗に書き換えたい」
+## Contributing & Feedback
+Contributions in any form—bug reports, feature requests, or pull requests—are welcome!
 
-など、どんな些細なことでも構いません。お気軽に Issue の作成や PR を送ってください。
-一緒にこのツールをに育てていきましょう。
+- "I want background presets with this kind of design"
+- "I want emojis to be displayed more beautifully"
+- "I want to refactor the code to be cleaner"
+
+Any feedback, no matter how small, is appreciated. Feel free to create an Issue or submit a PR.
+Let's grow this tool together!
 
 ## ライセンス
 MIT License
