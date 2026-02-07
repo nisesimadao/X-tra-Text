@@ -39,7 +39,7 @@ Contributions in any form—bug reports, feature requests, or pull requests—ar
 Any feedback, no matter how small, is appreciated. Feel free to create an Issue or submit a PR.
 Let's grow this tool together!
 
-## ライセンス
+## License
 MIT License
 
 Designed by Naikaku.
