@@ -1,45 +1,43 @@
-# X-tra Text 
-A Chrome extension designed to beautifully and smartly bypass X (Twitter)'s 140-character limit.
-Instantly convert long posts into images.
+# X-tra Text
 
-[日本語版 README はこちら](README-ja.md)
+X-tra Text is a Chrome extension for turning long X (Twitter) posts into images.
+It can render text beyond the normal post-length limit and copy the generated image to the clipboard.
+
+[日本語版 README](README-ja.md)
 
 ## Key Features
-- **Automatic Image Generation**: Convert long text exceeding 140 characters into an image and copy it to your clipboard with a single click.
-- **Smart Auto-Adjustment**: Automatically suggests the optimal font size and alignment (center/left) based on character count.
-- **Background Customization**: Set solid colors or upload your favorite images as backgrounds.
-- **Glassmorphism Effect**: Overlay a semi-transparent layer on background images to maintain readability while creating a stylish aesthetic.
-- **Real-time Editing**: Instantly preview changes to font size and outlines using sliders.
-- **Settings**: Customize various options to suit your preferences.
 
-## How to Use (Installation via Developer Mode)
-Please follow these steps for manual installation:
+- **Image generation**: render long text as an image and copy it to the clipboard.
+- **Automatic layout adjustment**: choose font size and center or left alignment based on the amount of text.
+- **Background customization**: use a solid color or an uploaded image as the background.
+- **Translucent overlay**: place a semi-transparent layer over image backgrounds to preserve text readability.
+- **Live editing**: preview font-size and outline changes while adjusting the controls.
+- **Settings**: configure the available rendering and display options.
 
-1. Clone this repository or download and extract the ZIP file.
+## Install in Developer Mode
+
+1. Clone this repository, or download and extract the ZIP archive.
 2. Open `chrome://extensions/` in Google Chrome.
-3. Enable "Developer mode" in the top right corner.
-4. Click "Load unpacked" and select the extracted folder.
-5. Open X (x.com) and click the new "Image Icon" in the post composer to start!
+3. Enable **Developer mode**.
+4. Click **Load unpacked** and select the extracted directory.
+5. Open X (`x.com`) and use the image button added to the post composer.
 
 ## Tech Stack
+
 - **Language**: JavaScript (Vanilla JS)
-- **Engine**: Canvas API (High-DPI support with 2x scale)
+- **Rendering**: Canvas API with 2× scaling for high-DPI output
 - **Architecture**:
-  - `renderer.js`: High-resolution rendering engine
-  - `ui.js`: Editor UI featuring Glassmorphism
-  - `utils.js`: Clipboard and editor operation utilities
+  - `renderer.js`: image rendering
+  - `ui.js`: editor UI
+  - `utils.js`: clipboard and editor utilities
 
-## Contributing & Feedback
-Contributions in any form—bug reports, feature requests, or pull requests—are welcome!
+## Contributing
 
-- "I want background presets with this kind of design"
-- "I want emojis to be displayed more beautifully"
-- "I want to refactor the code to be cleaner"
-
-Any feedback, no matter how small, is appreciated. Feel free to create an Issue or submit a PR.
-Let's grow this tool together!
+Bug reports, feature requests, and pull requests are welcome.
+Please open an Issue or PR with enough detail to reproduce a problem or explain the proposed change.
 
 ## License
+
 MIT License
 
 Designed by Naikaku.
